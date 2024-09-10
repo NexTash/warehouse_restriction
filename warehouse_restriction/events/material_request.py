@@ -23,3 +23,19 @@ def set_warehouse(doctype, txt, searchfield, start, page_len, filters):
                 warehouse_list.append((warehouse.name, warehouse.warehouse_name))
     
     return warehouse_list
+
+def restrictwarehouse(doc,method=None):
+    warehouse=doc.set_warehouse
+    if not warehouse:
+        warehouse = doc.items[0].warehouse
+    if frappe.db.exists("Warehouse Restriction", {'user': frappe.session.user,'document_name': "Material Request"}):
+        
+        restricted_warehouse = frappe.get_doc("Warehouse Restriction", frappe.session.user+"-Material Request") 
+        exist = 0
+        for row in restricted_warehouse.warehouses:
+            if row.warehouse == warehouse:
+                exist += 1
+        if not exist:
+            frappe.throw(f"Warehouse {warehouse} is not asigned current user. ")  
+    
+    return 0

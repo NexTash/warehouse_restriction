@@ -30,7 +30,8 @@ app_license = "MIT"
 doctype_js = {
     "Material Request" : "public/js/material_request.js",
     "Stock Reconciliation" : "public/js/stock_reconciliation.js",
-    "Stock Entry" : "public/js/stock_entry.js"
+    "Stock Entry" : "public/js/stock_entry.js",
+    "Purchase Invoice" : "public/js/purchase_invoice.js"
     }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -120,13 +121,24 @@ doctype_js = {
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
+doc_events = {
+    "Material Request":{
+        "validate":"warehouse_restriction.events.material_request.restrictwarehouse"
+        },
+    "Stock Entry":{
+        "validate":"warehouse_restriction.events.stock_entry.restrictwarehouse"
+        },
+    "Stock Reconciliation":{
+        "validate":"warehouse_restriction.events.stock_reconciliation.restrictwarehouse"
+        }
+}
 # 	"*": {
 # 		"on_update": "method",
 # 		"on_cancel": "method",
 # 		"on_trash": "method"
 # 	}
 # }
+
 
 # Scheduled Tasks
 # ---------------
